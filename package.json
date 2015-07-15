@@ -1,11 +1,10 @@
 {
-  "name": "ember-cli",
-  "version": "1.13.1",
+  "name": "react-cli",
+  "version": "0.0.1",
   "main": "lib/cli/index.js",
-  "description": "Command line tool for developing ambitious ember.js apps",
+  "description": "Command line tool for developing react.js apps",
   "trackingCode": "UA-49225444-1",
   "bin": {
-    "ember": "./bin/ember",
     "react": "./bin/react"
   },
   "processTitle": {
