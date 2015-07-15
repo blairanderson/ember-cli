@@ -32,6 +32,9 @@ var basicBlueprintFiles = [
   'test.txt'
 ];
 
+var config = require('../../../package.json');
+var cliTitle = config.processTitle.name;
+
 describe('Blueprint', function() {
   beforeEach(function() {
     Blueprint.ignoredFiles = defaultIgnoredFiles;
@@ -124,12 +127,12 @@ describe('Blueprint', function() {
     });
 
     it('finds blueprints in the ember-cli package', function() {
-      var expectedPath = path.resolve(defaultBlueprints, 'app');
+      var expectedPath = path.resolve(defaultBlueprints, cliTitle+'_app');
       var expectedClass = Blueprint;
 
-      var blueprint = Blueprint.lookup('app');
+      var blueprint = Blueprint.lookup(cliTitle+'_app');
 
-      expect(blueprint.name).to.equal('app');
+      expect(blueprint.name).to.equal(cliTitle+'_app');
       expect(blueprint.path).to.equal(expectedPath);
       expect(blueprint instanceof expectedClass).to.equal(true);
     });

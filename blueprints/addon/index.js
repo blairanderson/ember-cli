@@ -9,6 +9,9 @@ var uniq        = require('lodash/array/uniq');
 var Blueprint   = require('../../lib/models/blueprint');
 var SilentError = require('silent-error');
 var date        = new Date();
+var config = require('../../package.json');
+var cliTitle = config.processTitle.name;
+
 
 module.exports = {
   description: 'The default blueprint for ember-cli addons.',
@@ -91,7 +94,7 @@ module.exports = {
   files: function() {
     if (this._files) { return this._files; }
 
-    this._appBlueprint   = this.lookupBlueprint('app');
+    this._appBlueprint   = this.lookupBlueprint(cliTitle+'_app');
     var appFiles       = this._appBlueprint.files();
 
     this.generatePackageJson();

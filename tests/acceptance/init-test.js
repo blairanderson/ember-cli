@@ -1,6 +1,9 @@
 'use strict';
 
-var ember     = require('../helpers/ember');
+
+var config = require('../../package.json');
+var cliTitle = config.processTitle.name;
+var cli     = require('../helpers/' + cliTitle);
 var expect    = require('chai').expect;
 var walkSync  = require('walk-sync');
 var glob      = require('glob');
@@ -19,7 +22,7 @@ var EOL       = require('os').EOL;
 
 var defaultIgnoredFiles = Blueprint.ignoredFiles;
 
-describe('Acceptance: ember init', function() {
+describe('Acceptance: ' + cliTitle + ' init', function() {
   this.timeout(20000);
 
   before(function() {
@@ -93,21 +96,21 @@ describe('Acceptance: ember init', function() {
     });
   }
 
-  it('ember init', function() {
-    return ember([
+  it('cli init', function() {
+    return cli([
       'init',
       '--skip-npm',
       '--skip-bower',
     ]).then(confirmBlueprinted);
   });
 
-  it('ember init can run in created folder', function() {
+  it('cli init can run in created folder', function() {
     return tmp.setup('./tmp/foo')
       .then(function() {
         process.chdir('./tmp/foo');
       })
       .then(function() {
-        return ember([
+        return cli([
           'init',
           '--skip-npm',
           '--skip-bower'
@@ -120,13 +123,13 @@ describe('Acceptance: ember init', function() {
   });
 
   it('init an already init\'d folder', function() {
-    return ember([
+    return cli([
       'init',
       '--skip-npm',
       '--skip-bower'
     ])
     .then(function() {
-      return ember([
+      return cli([
         'init',
         '--skip-npm',
         '--skip-bower'
@@ -136,7 +139,7 @@ describe('Acceptance: ember init', function() {
   });
 
   it('init a single file', function() {
-    return ember([
+    return cli([
       'init',
       'app.js',
       '--skip-npm',
@@ -147,13 +150,13 @@ describe('Acceptance: ember init', function() {
   });
 
   it('init a single file on already init\'d folder', function() {
-    return ember([
+    return cli([
       'init',
       '--skip-npm',
       '--skip-bower'
     ])
     .then(function() {
-      return ember([
+      return cli([
         'init',
         'app.js',
         '--skip-npm',
@@ -164,7 +167,7 @@ describe('Acceptance: ember init', function() {
   });
 
   it('init multiple files by glob pattern', function() {
-    return ember([
+    return cli([
       'init',
       'app/**',
       '--skip-npm',
@@ -175,13 +178,13 @@ describe('Acceptance: ember init', function() {
   });
 
   it('init multiple files by glob pattern on already init\'d folder', function() {
-    return ember([
+    return cli([
       'init',
       '--skip-npm',
       '--skip-bower'
     ])
     .then(function() {
-      return ember([
+      return cli([
         'init',
         'app/**',
         '--skip-npm',
@@ -192,7 +195,7 @@ describe('Acceptance: ember init', function() {
   });
 
   it('init multiple files by glob patterns', function() {
-    return ember([
+    return cli([
       'init',
       'app/**',
       '{package,bower}.json',
@@ -205,13 +208,13 @@ describe('Acceptance: ember init', function() {
   });
 
   it('init multiple files by glob patterns on already init\'d folder', function() {
-    return ember([
+    return cli([
       'init',
       '--skip-npm',
       '--skip-bower'
     ])
     .then(function() {
-      return ember([
+      return cli([
         'init',
         'app/**',
         '{package,bower}.json',

@@ -13,7 +13,7 @@ var cliTitle = config.processTitle.name;
 var cli = path.join(root, 'bin', cliTitle);
 var tmpdir;
 
-describe.only('Acceptance: cli help', function() {
+describe('Acceptance: cli help', function() {
   this.timeout(40000);
 
   beforeEach(function() {

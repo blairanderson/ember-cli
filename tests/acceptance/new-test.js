@@ -1,7 +1,9 @@
 'use strict';
 
+var config = require('../../package.json');
+var cliTitle = config.processTitle.name;
 var fs         = require('fs-extra');
-var ember      = require('../helpers/ember');
+var cli        = require('../helpers/' + cliTitle);
 var existsSync = require('exists-sync');
 var expect     = require('chai').expect;
 var forEach    = require('lodash/collection/forEach');
@@ -14,7 +16,7 @@ var util       = require('util');
 var conf       = require('../helpers/conf');
 var EOL        = require('os').EOL;
 
-describe('Acceptance: ember new', function() {
+describe('Acceptance: cli new', function() {
   before(conf.setup);
 
   after(conf.restore);
@@ -53,11 +55,11 @@ describe('Acceptance: ember new', function() {
   }
 
   function confirmBlueprinted() {
-    return confirmBlueprintedForDir('blueprints/app');
+    return confirmBlueprintedForDir('blueprints/' + config.processTitle.name + 'app');
   }
 
-  it('ember new foo, where foo does not yet exist, works', function() {
-    return ember([
+  it('cli new foo, where foo does not yet exist, works', function() {
+    return cli([
       'new',
       'foo',
       '--skip-npm',
@@ -65,21 +67,21 @@ describe('Acceptance: ember new', function() {
     ]).then(confirmBlueprinted);
   });
 
-  it('ember new with empty app name doesnt throw exception', function() {
-    return ember([
+  it('cli new with empty app name doesnt throw exception', function() {
+    return cli([
       'new',
       ''
     ]);
   });
 
-  it('ember new without app name doesnt throw exception', function() {
-    return ember([
+  it('cli new without app name doesnt throw exception', function() {
+    return cli([
       'new'
     ]);
   });
 
-  it('ember new with app name creates new directory and has a dasherized package name', function() {
-    return ember([
+  it('cli new with app name creates new directory and has a dasherized package name', function() {
+    return cli([
       'new',
       'FooApp',
       '--skip-npm',
@@ -93,15 +95,15 @@ describe('Acceptance: ember new', function() {
     });
   });
 
-  it('Cannot run ember new, inside of ember-cli project', function() {
-    return ember([
+  it('Cannot run cli new, inside of ember-cli project', function() {
+    return cli([
       'new',
       'foo',
       '--skip-npm',
       '--skip-bower',
       '--skip-git'
     ]).then(function() {
-      return ember([
+      return cli([
         'new',
         'foo',
         '--skip-npm',
@@ -113,7 +115,7 @@ describe('Acceptance: ember new', function() {
     }).then(confirmBlueprinted);
   });
 
-  it('ember new with blueprint uses the specified blueprint directory with a relative path', function() {
+  it('cli new with blueprint uses the specified blueprint directory with a relative path', function() {
     return tmp.setup('./tmp/my_blueprint')
       .then(function() {
         return tmp.setup('./tmp/my_blueprint/files');
@@ -122,7 +124,7 @@ describe('Acceptance: ember new', function() {
         fs.writeFileSync('./tmp/my_blueprint/files/gitignore');
         process.chdir('./tmp');
 
-        return ember([
+        return cli([
           'new',
           'foo',
           '--skip-npm',
@@ -134,7 +136,7 @@ describe('Acceptance: ember new', function() {
       .then(confirmBlueprintedForDir('tmp/my_blueprint'));
   });
 
-  it('ember new with blueprint uses the specified blueprint directory with an absolute path', function() {
+  it('cli new with blueprint uses the specified blueprint directory with an absolute path', function() {
     return tmp.setup('./tmp/my_blueprint')
       .then(function() {
         return tmp.setup('./tmp/my_blueprint/files');
@@ -143,7 +145,7 @@ describe('Acceptance: ember new', function() {
         fs.writeFileSync('./tmp/my_blueprint/files/gitignore');
         process.chdir('./tmp');
 
-        return ember([
+        return cli([
           'new',
           'foo',
           '--skip-npm',
@@ -156,10 +158,10 @@ describe('Acceptance: ember new', function() {
   });
 
 
-  it('ember new with git blueprint uses checks out the blueprint and uses it', function(){
+  it('cli new with git blueprint uses checks out the blueprint and uses it', function(){
     this.timeout(10000);
 
-    return ember([
+    return cli([
       'new',
       'foo',
       '--skip-npm',
@@ -171,8 +173,8 @@ describe('Acceptance: ember new', function() {
     });
   });
 
-  it('ember new without skip-git flag creates .git dir', function(){
-    return ember([
+  it('cli new without skip-git flag creates .git dir', function(){
+    return cli([
       'new',
       'foo',
       '--skip-npm',
@@ -182,8 +184,8 @@ describe('Acceptance: ember new', function() {
     });
   });
 
-  it('ember new with --dry-run does not create new directory', function(){
-    return ember([
+  it('cli new with --dry-run does not create new directory', function(){
+    return cli([
       'new',
       'foo',
       '--dry-run'
@@ -195,8 +197,8 @@ describe('Acceptance: ember new', function() {
     });
   });
 
-  it('ember new with --directory uses given directory name and has correct package name', function() {
-    return ember([
+  it('cli new with --directory uses given directory name and has correct package name', function() {
+    return cli([
       'new',
       'foo',
       '--skip-npm',
