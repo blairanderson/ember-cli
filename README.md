@@ -3,13 +3,6 @@
 
 The React.js command line utility.
 
-## Project Elements
-Additional components of this project which are used at runtime in your application:
-* [ember-resolver](https://github.com/ember-cli/ember-resolver)
-* [loader](https://github.com/ember-cli/loader.js)
-* [ember-cli-shims](https://github.com/ember-cli/ember-cli-shims)
-* [ember-load-initializers](https://github.com/ember-cli/ember-load-initializers)
-
 ## Development Hints
 ### Working with master
 
@@ -42,6 +35,13 @@ runs.
 To exclude a test or test suite append a `.skip` to `it()` or `describe()` respectively (e.g. `it.skip(...)`). To focus on a certain test or test suite append `.only`.
 
 Please read the official [mocha documentation](http://mochajs.org/) for more information.
+
+## Project Elements
+Additional components of this project which are used at runtime in your application:
+* [ember-resolver](https://github.com/ember-cli/ember-resolver)
+* [loader](https://github.com/ember-cli/loader.js)
+* [ember-cli-shims](https://github.com/ember-cli/ember-cli-shims)
+* [ember-load-initializers](https://github.com/ember-cli/ember-load-initializers)
 
 ## Problems
 
