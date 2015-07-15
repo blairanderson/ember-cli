@@ -10,3 +10,4 @@ docs/build
 .bower_components-tmp
 coverage
 .idea/
+.DS_Store
