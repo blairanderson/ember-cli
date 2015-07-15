@@ -5,7 +5,11 @@
   "description": "Command line tool for developing ambitious ember.js apps",
   "trackingCode": "UA-49225444-1",
   "bin": {
-    "ember": "./bin/ember"
+    "ember": "./bin/ember",
+    "react": "./bin/react"
+  },
+  "processTitle": {
+    "name": "react"
   },
   "scripts": {
     "docs": "node bin/generate-docs.js",
@@ -17,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ember-cli/ember-cli.git"
+    "url": "https://github.com/blairanderson/ember-cli.git"
   },
   "engines": {
     "node": ">= 0.10.0"
@@ -25,16 +29,19 @@
   "keywords": [
     "ember.js",
     "ember",
+    "react.js",
+    "react",
     "cli",
     "app",
     "kit",
     "app-kit",
-    "ember-app-kit"
+    "ember-app-kit",
+    "react-app_kit"
   ],
   "author": "Stefan Penner, Robert Jackson and ember-cli contributors",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ember-cli/ember-cli/issues"
+    "url": "https://github.com/blairanderson/ember-cli/issues"
   },
   "bundledDependencies": [
     "bower",

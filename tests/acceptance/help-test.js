@@ -1,17 +1,19 @@
 'use strict';
 
-var path       = require('path');
-var tmp        = require('tmp-sync');
-var expect     = require('chai').expect;
+var path = require('path');
+var tmp = require('tmp-sync');
+var expect = require('chai').expect;
 var runCommand = require('../helpers/run-command');
-var Promise    = require('../../lib/ext/promise');
-var remove     = Promise.denodeify(require('fs-extra').remove);
-var root       = process.cwd();
-var tmproot    = path.join(root, 'tmp');
-var ember      = path.join(root, 'bin', 'ember');
+var Promise = require('../../lib/ext/promise');
+var remove = Promise.denodeify(require('fs-extra').remove);
+var root = process.cwd();
+var tmproot = path.join(root, 'tmp');
+var config = require('../../package.json');
+var cliTitle = config.processTitle.name;
+var cli = path.join(root, 'bin', cliTitle);
 var tmpdir;
 
-describe('Acceptance: ember help', function() {
+describe.only('Acceptance: cli help', function() {
   this.timeout(40000);
 
   beforeEach(function() {
@@ -24,20 +26,28 @@ describe('Acceptance: ember help', function() {
     return remove(tmproot);
   });
 
+  it('should have title', function() {
+    expect(cliTitle).to.be.ok;
+  });
+
+  it('should have a cli', function() {
+    expect(cli).to.be.ok;
+  });
+
   it('generate lists blueprints', function() {
     var output = '';
 
-    return runCommand(ember, 'init',
-                      '--name=my-app',
-                      '--silent',
-                      '--skip-npm',
-                      '--skip-bower',
-                      '--skip-installation-check')
+    return runCommand(cli, 'init',
+      '--name=my-app',
+      '--silent',
+      '--skip-npm',
+      '--skip-bower',
+      '--skip-installation-check')
       .then(function() {
-        return runCommand(ember, 'generate', 'blueprint', 'component', '--silent', '--skip-installation-check');
+        return runCommand(cli, 'generate', 'blueprint', 'component', '--silent', '--skip-installation-check');
       })
       .then(function() {
-        return runCommand(ember, 'help', 'generate', '--verbose', '--skip-installation-check', {
+        return runCommand(cli, 'help', 'generate', '--verbose', '--skip-installation-check', {
           onOutput: function(string) {
             output += string;
           }
@@ -70,14 +80,14 @@ describe('Acceptance: ember help', function() {
   it('generate single blueprint', function() {
     var output = '';
 
-    return runCommand(ember, 'init',
-                      '--name=my-app',
-                      '--silent',
-                      '--skip-npm',
-                      '--skip-bower',
-                      '--skip-installation-check')
+    return runCommand(cli, 'init',
+      '--name=my-app',
+      '--silent',
+      '--skip-npm',
+      '--skip-bower',
+      '--skip-installation-check')
       .then(function() {
-        return runCommand(ember, 'help', 'generate', 'model', '--skip-installation-check', {
+        return runCommand(cli, 'help', 'generate', 'model', '--skip-installation-check', {
           onOutput: function(string) {
             output += string;
           }
@@ -86,7 +96,7 @@ describe('Acceptance: ember help', function() {
       .then(function() {
         expect(output).to.include('Generates new code from blueprints.');
         expect(output).to.include('You may generate models with as many attrs as ' +
-        'you would like to pass. The following attribute types are supported:');
+          'you would like to pass. The following attribute types are supported:');
         expect(output).to.include('<attr-name>');
         expect(output).to.include('<attr-name>:array');
         expect(output).to.include('<attr-name>:boolean');
@@ -102,13 +112,13 @@ describe('Acceptance: ember help', function() {
   it('generate single blueprint --help', function() {
     var output = '';
 
-    return runCommand(ember, 'init',
-                      '--name=my-app',
-                      '--silent',
-                      '--skip-npm',
-                      '--skip-bower')
+    return runCommand(cli, 'init',
+      '--name=my-app',
+      '--silent',
+      '--skip-npm',
+      '--skip-bower')
       .then(function() {
-        return runCommand(ember, 'generate', 'model', '--help', '--skip-installation-check', {
+        return runCommand(cli, 'generate', 'model', '--help', '--skip-installation-check', {
           onOutput: function(string) {
             output += string;
           }
@@ -117,7 +127,7 @@ describe('Acceptance: ember help', function() {
       .then(function() {
         expect(output).to.include('Generates new code from blueprints.');
         expect(output).to.include('You may generate models with as many attrs as ' +
-        'you would like to pass. The following attribute types are supported:');
+          'you would like to pass. The following attribute types are supported:');
         expect(output).to.include('<attr-name>');
         expect(output).to.include('<attr-name>:array');
         expect(output).to.include('<attr-name>:boolean');
@@ -133,13 +143,13 @@ describe('Acceptance: ember help', function() {
   it('generate single blueprint -h', function() {
     var output = '';
 
-    return runCommand(ember, 'init',
-                      '--name=my-app',
-                      '--silent',
-                      '--skip-npm',
-                      '--skip-bower')
+    return runCommand(cli, 'init',
+      '--name=my-app',
+      '--silent',
+      '--skip-npm',
+      '--skip-bower')
       .then(function() {
-        return runCommand(ember, 'generate', 'model', '-h', '--skip-installation-check', {
+        return runCommand(cli, 'generate', 'model', '-h', '--skip-installation-check', {
           onOutput: function(string) {
             output += string;
           }
@@ -148,7 +158,7 @@ describe('Acceptance: ember help', function() {
       .then(function() {
         expect(output).to.include('Generates new code from blueprints.');
         expect(output).to.include('You may generate models with as many attrs as ' +
-        'you would like to pass. The following attribute types are supported:');
+          'you would like to pass. The following attribute types are supported:');
         expect(output).to.include('<attr-name>');
         expect(output).to.include('<attr-name>:array');
         expect(output).to.include('<attr-name>:boolean');
