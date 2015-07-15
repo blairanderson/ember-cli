@@ -1,6 +1,5 @@
 import React from 'react';
-//import App from './containers/App';
-import App from './containers/TodoApp';
+import App from './containers/App';
 import 'todomvc-app-css/index.css';
 
 React.render(
